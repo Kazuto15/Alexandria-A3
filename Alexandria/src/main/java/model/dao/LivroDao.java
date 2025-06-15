@@ -101,6 +101,26 @@ public class LivroDao {
         }finally{
             Conexao.closeConnection(con, stmt);
         }
+    }
     
+    public int contarLivro(int usuarioId){
+        int total = 0;
+        String sql = "SELECT COUNT(*) AS total FROM livros WHERE usuario_id= ?";
+        
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, usuarioId);
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next()){
+                total = rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LivroDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return total;  
     }
 }

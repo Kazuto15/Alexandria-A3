@@ -6,10 +6,15 @@ package Tela.admin;
 
 import Tela.TelaCadastroDeUsuario;
 import Tela.Utils;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Admin;
 import model.bean.Usuario;
+import model.dao.LivroDao;
 import model.dao.UsuarioDao;
 
 /**
@@ -30,20 +35,30 @@ public class TelaHomeAdmin extends javax.swing.JFrame {
         readJTable();
         Utils.setIcon(this);
     }
-
+    
+//    private void carregarLivros(){
+//        LivroDao dao = new LivroDao();
+//        int total = dao.contarLivro(usuario.getId()):
+//    }
     public void readJTable(){
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);
         
-        UsuarioDao dao = new UsuarioDao();
-        for(Usuario u:dao.read()){
+        UsuarioDao daoUsuario = new UsuarioDao();
+        LivroDao daoLivro = new LivroDao();
+        
+        for(Usuario u:daoUsuario.read()){
+            int totalLivros = daoLivro.contarLivro(u.getId());
+            
             modelo.addRow(new Object[]{
                 u.getId(),
                 u.getNome(),
-                u.getDataNasc()
+                u.getIdade(),
+                totalLivros
             });
         }
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,17 +96,22 @@ public class TelaHomeAdmin extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Id", "Nome", "Idade"
+                "Id", "Nome", "Idade", "Livros"
             }
         ));
         jTUsuarios.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(60);
+            jTable1.getColumnModel().getColumn(3).setMaxWidth(80);
+        }
 
         attBtn.setText("Atualizar usuário");
         attBtn.addActionListener(new java.awt.event.ActionListener() {

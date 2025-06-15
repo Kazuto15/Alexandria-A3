@@ -75,6 +75,7 @@ public class TelaHome extends javax.swing.JFrame {
 
         jFrame1 = new javax.swing.JFrame();
         jPanel4 = new javax.swing.JPanel();
+        jPasswordField1 = new javax.swing.JPasswordField();
         jLabelBemVindo = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -108,6 +109,8 @@ public class TelaHome extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        jPasswordField1.setText("jPasswordField1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabelBemVindo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -138,15 +141,33 @@ public class TelaHome extends javax.swing.JFrame {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
-                "Id", "Nome", "Autor", "Gênero"
+                "id", "nome", "autor", "Tipo"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Short.class, java.lang.String.class, java.lang.String.class, java.lang.Short.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane5.setViewportView(jTableHome);
-        jTableHome.getAccessibleContext().setAccessibleParent(jTableHome);
+        if (jTableHome.getColumnModel().getColumnCount() > 0) {
+            jTableHome.getColumnModel().getColumn(0).setMinWidth(10);
+            jTableHome.getColumnModel().getColumn(0).setMaxWidth(60);
+            jTableHome.getColumnModel().getColumn(1).setMinWidth(50);
+            jTableHome.getColumnModel().getColumn(1).setPreferredWidth(50);
+            jTableHome.getColumnModel().getColumn(1).setMaxWidth(300);
+            jTableHome.getColumnModel().getColumn(2).setMinWidth(75);
+            jTableHome.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jTableHome.getColumnModel().getColumn(2).setMaxWidth(200);
+            jTableHome.getColumnModel().getColumn(3).setMinWidth(10);
+            jTableHome.getColumnModel().getColumn(3).setMaxWidth(200);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,7 +178,7 @@ public class TelaHome extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelBemVindo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addGap(53, 53, 53))
                     .addGroup(layout.createSequentialGroup()
@@ -166,8 +187,8 @@ public class TelaHome extends javax.swing.JFrame {
                             .addComponent(jButton1)
                             .addComponent(jLabel2)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(208, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,6 +240,7 @@ public class TelaHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelBemVindo;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableHome;
