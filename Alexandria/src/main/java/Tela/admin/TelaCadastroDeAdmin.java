@@ -4,6 +4,7 @@
  */
 package Tela.admin;
 
+import Tela.Utils;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.bean.Admin;
@@ -21,6 +22,7 @@ public class TelaCadastroDeAdmin extends javax.swing.JFrame {
     public TelaCadastroDeAdmin() {
         initComponents();
         this.setLocationRelativeTo(null);
+        Utils.setIcon(this);
     }
 
     /**
@@ -160,6 +162,7 @@ public class TelaCadastroDeAdmin extends javax.swing.JFrame {
             dao.create(a);
             JOptionPane.showMessageDialog(null, "Administrador criado com sucesso!");
             this.dispose();
+            new TelaDeLoginAdmin().setVisible(true);
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar o administrador"+ ex.getMessage());

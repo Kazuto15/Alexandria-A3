@@ -77,29 +77,31 @@ public class UsuarioDao {
         }
         
     }
-    public void login(String email, String senha){
+    public Usuario login(String nome, String senha){
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
         try{
-            stmt =con.prepareStatement("SELECT * FROM usuario WHERE email = ? and senha = ?");
-            stmt.setString(1, email);
+            stmt =con.prepareStatement("SELECT * FROM usuario WHERE nome = ? and senha = ?");
+            stmt.setString(1, nome);
             stmt.setString(2, senha);
             
             rs = stmt.executeQuery();
             
             if(rs.next()){
                 Usuario u = new Usuario();
-                
+                u.setId(rs.getInt("id"));
                 u.setNome(rs.getString("nome"));
                 u.setSenha(rs.getString("senha"));
+                return u;
             }
         }catch(SQLException ex){
             Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             Conexao.closeConnection(con, stmt);
         }
+        return null;
     }
     public List<Usuario> read(){
         Connection con= Conexao.getConnection();

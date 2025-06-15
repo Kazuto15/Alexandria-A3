@@ -30,6 +30,7 @@ public class TelaCadastroDeUsuario extends javax.swing.JFrame {
     private Admin admin;
     public TelaCadastroDeUsuario(Admin adminLogado) {
         initComponents();
+        Utils.setIcon(this);
         this.setLocationRelativeTo(null);
         this.admin =adminLogado;
         JSpinner ageSpin = new JSpinner(

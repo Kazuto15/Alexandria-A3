@@ -13,14 +13,20 @@ public class Livro {
     private String nome;
     private String autor;
     private int idTipo;
+    private String Tipo;
+    private int usuarioId;
+
+    
 
     public Livro() {
     }
 
-    public Livro(String nome, String autor, int idTipo) {
+    public Livro(String nome, String autor, int idTipo, String Tipo,int usuarioId) {
         this.nome = nome;
         this.autor = autor;
         this.idTipo = idTipo;
+        this.Tipo = Tipo;
+        this.usuarioId = usuarioId;
     }
     
     public int getId() {
@@ -54,6 +60,19 @@ public class Livro {
     public void setIdTipo(int idTipo) {
         this.idTipo = idTipo;
     }
- 
     
+    public String getTipo() {
+        return Tipo;
+    }
+
+    public void setTipo(String Tipo) {
+        this.Tipo = Tipo;
+    }
+    public int getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
+    }
 }
