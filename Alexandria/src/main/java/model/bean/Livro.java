@@ -14,19 +14,17 @@ public class Livro {
     private String autor;
     private int idTipo;
     private String Tipo;
-    private int usuarioId;
-
-    
+    private String feedback;
 
     public Livro() {
     }
 
-    public Livro(String nome, String autor, int idTipo, String Tipo,int usuarioId) {
+    public Livro(String nome, String autor, int idTipo, String Tipo, String feedback) {
         this.nome = nome;
         this.autor = autor;
         this.idTipo = idTipo;
         this.Tipo = Tipo;
-        this.usuarioId = usuarioId;
+        this.feedback = feedback; 
     }
     
     public int getId() {
@@ -68,11 +66,13 @@ public class Livro {
     public void setTipo(String Tipo) {
         this.Tipo = Tipo;
     }
-    public int getUsuarioId() {
-        return usuarioId;
+    
+    public String getFeedback(){
+    return feedback;
     }
-
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
+    
+    public void setFeedback(String feedback){
+    this.feedback = feedback;
     }
+    
 }

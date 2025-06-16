@@ -25,44 +25,42 @@ public class TelaHome extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.usuario = usuarioLogado;
-        jLabelBemVindo.setText("Bem-vindo " + usuario.getNome());
         readJTable();
+        readJTableFav();
+        jLabelBemVindo.setText("Bem-vindo " + usuario.getNome());
 
     }
     
-    public void readJTable(){
+      public void readJTable(){
         DefaultTableModel modelo = (DefaultTableModel) jTableHome.getModel();
         modelo.setRowCount(0);
         LivroDao dao = new LivroDao();
-        java.util.List<Livro> livros = dao.read(usuario.getId());
-        
-        if(livros.isEmpty()){
-            jLabel2.setVisible(true);
-            jLabel3.setVisible(false);
-            jSeparator1.setVisible(false);
-            jScrollPane5.setVisible(false);
-            
-            jButton1.setLocation( // x e y que você quiser para ficar no canto inferior direito
-            this.getWidth() - jButton1.getWidth() - 30,
-            this.getHeight() - jButton1.getHeight() - 50
-        );
-        }else{
-            jLabel2.setVisible(false);
-            jLabel3.setVisible(true);
-            jSeparator1.setVisible(true);
-            jScrollPane5.setVisible(true);
-            
-            for(Livro u: livros){
-                modelo.addRow(new Object[]{
-                    u.getId(),
-                    u.getNome(),
-                    u.getAutor(),
-                    u.getTipo()
-                });
-            }
-            jButton1.setLocation(30, 150);
+        for(Livro u:dao.read()){
+            modelo.addRow(new Object[]{
+                u.getId(),
+                u.getNome(),
+                u.getAutor(),
+                u.getTipo(),
+                u.getFeedback()
+                    
+            });
         }
     }
+      
+      public void readJTableFav(){
+        DefaultTableModel modelo = (DefaultTableModel) jTableHomeFav.getModel();
+        modelo.setRowCount(0);
+        LivroDao dao = new LivroDao();
+        for(Livro u:dao.readFav()){
+            modelo.addRow(new Object[]{
+                u.getId(),
+                u.getNome(),
+                u.getAutor(),
+                u.getTipo(),
+            });
+        }
+    } 
+      
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,7 +73,6 @@ public class TelaHome extends javax.swing.JFrame {
 
         jFrame1 = new javax.swing.JFrame();
         jPanel4 = new javax.swing.JPanel();
-        jPasswordField1 = new javax.swing.JPasswordField();
         jLabelBemVindo = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -84,6 +81,8 @@ public class TelaHome extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTableHome = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableHomeFav = new javax.swing.JTable();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -108,8 +107,6 @@ public class TelaHome extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
-
-        jPasswordField1.setText("jPasswordField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -138,35 +135,33 @@ public class TelaHome extends javax.swing.JFrame {
 
         jTableHome.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Id", "Nome", "Autor", "Gênero", "Comentarios"
+            }
+        ));
+        jScrollPane5.setViewportView(jTableHome);
+        jTableHome.getAccessibleContext().setAccessibleParent(jTableHome);
+
+        jTableHomeFav.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
-                "id", "nome", "autor", "Tipo"
+                "Id", "Nome", "Autor", "Gênero"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Short.class, java.lang.String.class, java.lang.String.class, java.lang.Short.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane5.setViewportView(jTableHome);
-        if (jTableHome.getColumnModel().getColumnCount() > 0) {
-            jTableHome.getColumnModel().getColumn(0).setMinWidth(10);
-            jTableHome.getColumnModel().getColumn(0).setMaxWidth(60);
-            jTableHome.getColumnModel().getColumn(1).setMinWidth(50);
-            jTableHome.getColumnModel().getColumn(1).setPreferredWidth(50);
-            jTableHome.getColumnModel().getColumn(1).setMaxWidth(300);
-            jTableHome.getColumnModel().getColumn(2).setMinWidth(75);
-            jTableHome.getColumnModel().getColumn(2).setPreferredWidth(100);
-            jTableHome.getColumnModel().getColumn(2).setMaxWidth(200);
-            jTableHome.getColumnModel().getColumn(3).setMinWidth(10);
-            jTableHome.getColumnModel().getColumn(3).setMaxWidth(200);
+        ));
+        jScrollPane1.setViewportView(jTableHomeFav);
+        if (jTableHomeFav.getColumnModel().getColumnCount() > 0) {
+            jTableHomeFav.getColumnModel().getColumn(2).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -178,17 +173,18 @@ public class TelaHome extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelBemVindo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addGap(53, 53, 53))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jButton1)
-                            .addComponent(jLabel2)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(17, 208, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,7 +203,9 @@ public class TelaHome extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -240,9 +238,10 @@ public class TelaHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelBemVindo;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableHome;
+    private javax.swing.JTable jTableHomeFav;
     // End of variables declaration//GEN-END:variables
 }
