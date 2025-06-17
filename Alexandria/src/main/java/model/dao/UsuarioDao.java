@@ -29,10 +29,12 @@ public class UsuarioDao {
         PreparedStatement stmt = null;
         
         try {
-        stmt = con.prepareStatement("INSERT INTO usuario (nome,senha,dataNasc) VALUES (?,?,?)");
+        stmt = con.prepareStatement("INSERT INTO usuario (nome,senha,dataNasc,tipoFav1 ,tipoFav2) VALUES (?,?,?,?,?)");
             stmt.setString(1, u.getNome());
             stmt.setString(2, u.getSenha());
             stmt.setDate(3, java.sql.Date.valueOf(u.getDataNasc()));
+            stmt.setString(4, u.getTipoFav1());
+            stmt.setString(5, u.getTipoFav2());
             
             stmt.executeUpdate();
         } catch (SQLException ex) {
@@ -46,11 +48,13 @@ public class UsuarioDao {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE usuario SET nome =?,senha=?,dataNasc=? WHERE id=?");
+            stmt = con.prepareStatement("UPDATE usuario SET nome =?,senha=?,dataNasc=?,tipoFav1 =?,tipoFav2=? WHERE id=?");
             stmt.setString(1, u.getNome());
             stmt.setString(2, u.getSenha());
             stmt.setDate(3,java.sql.Date.valueOf(u.getDataNasc()));
-            stmt.setInt(4, u.getId());
+            stmt.setString(4, u.getTipoFav1());
+            stmt.setString(5, u.getTipoFav2());
+            stmt.setInt(6, u.getId());
             
             stmt.executeUpdate();
             
@@ -123,6 +127,8 @@ public class UsuarioDao {
                 if(data != null){
                     u.setDataNasc(data.toLocalDate());                
                 }
+                u.setTipoFav1(rs.getString("tipoFav1"));
+                u.setTipoFav1(rs.getString("tipoFav2"));
                 Usuarios.add(u);
             }
         }catch(SQLException ex){
@@ -146,6 +152,8 @@ public class UsuarioDao {
                 u.setId(rs.getInt("id"));
                 u.setNome(rs.getString("nome"));
                 u.setDataNasc(rs.getDate("dataNasc").toLocalDate());
+                u.setTipoFav1(rs.getString("tipoFav1"));
+                u.setTipoFav2(rs.getString("tipoFav2"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

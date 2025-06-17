@@ -25,11 +25,12 @@ public class LivroDao {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("INSERT INTO tb_livros (nome,id_tipo,autor,feedback) VALUES (?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO livros (nome,id_tipo,autor,feedback, usuario_id) VALUES (?,?,?,?,?)");
             stmt.setString(1, l.getNome());
             stmt.setInt(2, l.getIdTipo());
             stmt.setString(3, l.getAutor());
             stmt.setString(4, l.getFeedback());
+            stmt.setInt(5, l.getUsuarioId());
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Livro cadastrado com sucesso!");
         } catch (SQLException ex) {
@@ -39,7 +40,7 @@ public class LivroDao {
         }
     }
     
-    public List<Livro> read(){
+    public List<Livro> read(int usuarioId){
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -47,7 +48,8 @@ public class LivroDao {
         List<Livro> livros = new ArrayList<>();
                 
         try {
-            stmt = con.prepareStatement("SELECT l.id, l.nome, l.autor, l.feedback, t.tipo FROM tb_livros l JOIN tb_TipoLivros t ON l.id_tipo = t.id ORDER BY l.id ASC");
+            stmt = con.prepareStatement("SELECT l.id, l.nome, l.autor, l.feedback, t.tipo FROM livros l JOIN tipoLivros t ON l.id_tipo = t.id WHERE l.usuario_id = ? ORDER BY l.id ASC");
+            stmt.setInt(1, usuarioId);
             rs = stmt.executeQuery();
             while (rs.next()){
                 Livro livro = new Livro();
@@ -75,7 +77,7 @@ public class LivroDao {
         List<Livro> livros = new ArrayList<>();
                 
         try {
-            stmt = con.prepareStatement("SELECT tb_livros.id,tb_livros.nome, tb_livros.autor,t.tipo FROM tb_livros INNER JOIN livroFav AS lf1 ON lf1.id_livro = tb_livros.id JOIN tb_TipoLivros t ON tb_livros.id_tipo = t.id ORDER BY tb_livros.id ASC");
+            stmt = con.prepareStatement("SELECT livros.id,livros.nome, livros.autor,t.tipo FROM livros INNER JOIN livroFav AS lf1 ON lf1.id_livro = livros.id JOIN tipoLivros t ON livros.id_tipo = t.id ORDER BY livros.id ASC");
             rs = stmt.executeQuery();
             while (rs.next()){
                 Livro livro = new Livro();
@@ -99,7 +101,7 @@ public class LivroDao {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE tb_livros SET nome = ?,id_tipo = ?,autor = ?,feedback = ?,WHERE id = ?");
+            stmt = con.prepareStatement("UPDATE livros SET nome = ?,id_tipo = ?,autor = ?,feedback = ?,WHERE id = ?");
             stmt.setString(1, l.getNome());
             stmt.setInt(2, l.getIdTipo());
             stmt.setString(3, l.getAutor());
@@ -120,7 +122,7 @@ public class LivroDao {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("DELETE FROM tb_livros WHERE id = ?");
+            stmt = con.prepareStatement("DELETE FROM livros WHERE id = ?");
             stmt.setInt(1, l.getId());
             
             JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
@@ -129,6 +131,26 @@ public class LivroDao {
         }finally{
             Conexao.closeConnection(con, stmt);
         }
-    
+        
+    }
+    public int contarLivro(int usuarioId){
+        int total = 0;
+        String sql = "SELECT COUNT(*) AS total FROM livros WHERE usuario_id= ?";
+        
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, usuarioId);
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next()){
+                total = rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LivroDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return total;  
     }
 }

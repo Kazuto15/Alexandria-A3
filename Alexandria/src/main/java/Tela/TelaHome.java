@@ -30,12 +30,22 @@ public class TelaHome extends javax.swing.JFrame {
         jLabelBemVindo.setText("Bem-vindo " + usuario.getNome());
 
     }
-    
-      public void readJTable(){
+    public void mostrarBnts(){
+        if(jTableHome.getRowCount() == 0){
+            jLabel2.setVisible(false);
+            jTableHome.setVisible(false);
+            jTableHomeFav.setVisible(false);
+        }else{
+            jLabel2.setVisible(true);
+            jTableHome.setVisible(true);
+            jTableHomeFav.setVisible(false);
+        }
+    }
+    public void readJTable(){
         DefaultTableModel modelo = (DefaultTableModel) jTableHome.getModel();
         modelo.setRowCount(0);
         LivroDao dao = new LivroDao();
-        for(Livro u:dao.read()){
+        for(Livro u:dao.read(usuario.getId())){
             modelo.addRow(new Object[]{
                 u.getId(),
                 u.getNome(),
@@ -71,8 +81,6 @@ public class TelaHome extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFrame1 = new javax.swing.JFrame();
-        jPanel4 = new javax.swing.JPanel();
         jLabelBemVindo = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -83,30 +91,6 @@ public class TelaHome extends javax.swing.JFrame {
         jTableHome = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableHomeFav = new javax.swing.JTable();
-
-        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        jPanel4.setBackground(new java.awt.Color(255, 25, 25));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -233,7 +217,6 @@ public class TelaHome extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelBemVindo;

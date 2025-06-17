@@ -207,4 +207,5 @@ public class TelaDeLoginAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField passField;
     // End of variables declaration//GEN-END:variables
+    
 }

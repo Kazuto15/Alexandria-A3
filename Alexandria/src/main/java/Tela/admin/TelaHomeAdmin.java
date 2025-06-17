@@ -174,7 +174,7 @@ public class TelaHomeAdmin extends javax.swing.JFrame {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
-        TelaCadastroDeUsuario cadastro = new TelaCadastroDeUsuario(admin);
+        TelaCadastroDeUsuario cadastro = new TelaCadastroDeUsuario(admin, this);
         cadastro.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_addBtnActionPerformed

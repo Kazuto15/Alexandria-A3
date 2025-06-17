@@ -1,10 +1,10 @@
 Tela\admin\TelaDeLoginAdmin$1.class
 Tela\admin\TelaCadastroDeAdmin$5.class
 Tela\TelaCadastroDeUsuario$2.class
-Tela\TelaHome$3.class
 model\bean\Livro.class
 Tela\admin\TelaLogCadasAdm.class
 Tela\TelaPerfil$2.class
+Tela\TelaCadastroDeLivro.class
 model\bean\Admin.class
 Tela\TelaDeLoginUsuario$3.class
 Tela\admin\TelaCadastroDeAdmin$2.class
@@ -13,6 +13,7 @@ Conexao\Conexao.class
 Tela\TelaCadastroDeLivro$1.class
 Tela\TelaPerfil$1.class
 Tela\admin\TelaHomeAdmin.class
+Tela\TelaCadastroDeUsuario$5.class
 Tela\TelaHome.class
 Tela\admin\TelaHomeAdmin$4.class
 Tela\admin\TelaDeLoginAdmin$2.class
@@ -24,6 +25,7 @@ Tela\admin\TelaCadastroDeAdmin$1.class
 Tela\TelaDeLoginUsuario$2.class
 Tela\TelaCadastroDeUsuario.class
 model\dao\LivroDao.class
+Tela\TelaCadastroDeUsuario$6.class
 Tela\TelaHome$2.class
 Tela\admin\TelaDeLoginAdmin.class
 Tela\main.class

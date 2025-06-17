@@ -63,11 +63,10 @@ public class TelaAtualizarUsuario extends javax.swing.JFrame {
         UsuarioDao dao = new UsuarioDao();
         dao.update(usuario);
         
-        JOptionPane.showMessageDialog(this, "Usuario atualizado co sucesso");
         this.dispose();
         new TelaHomeAdmin(admin).setVisible(true);
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Erro ao salvar alteracoes" + e.getMessage());
+            System.out.println("Erro ao salvar alteracoes" + e.getMessage());
         }
     }
     /**
@@ -153,7 +152,7 @@ public class TelaAtualizarUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
         TelaHomeAdmin home = new TelaHomeAdmin(admin);
-        home.setVisible(rootPaneCheckingEnabled);
+        home.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

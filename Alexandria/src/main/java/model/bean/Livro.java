@@ -15,16 +15,19 @@ public class Livro {
     private int idTipo;
     private String Tipo;
     private String feedback;
+    private int usuarioId;
 
+    
     public Livro() {
     }
 
-    public Livro(String nome, String autor, int idTipo, String Tipo, String feedback) {
+    public Livro(String nome, String autor, int idTipo, String Tipo, String feedback, int usuarioId) {
         this.nome = nome;
         this.autor = autor;
         this.idTipo = idTipo;
         this.Tipo = Tipo;
         this.feedback = feedback; 
+        this.usuarioId = usuarioId;
     }
     
     public int getId() {
@@ -74,5 +77,13 @@ public class Livro {
     public void setFeedback(String feedback){
     this.feedback = feedback;
     }
+    public int getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
     
 }

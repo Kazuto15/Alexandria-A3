@@ -150,6 +150,22 @@ public class TelaCadastroDeAdmin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String nomeUsuario = nameField.getText().trim();
+        String emailUsuario = emailField.getText().trim();
+        String senhaUsuario = new String(passField.getPassword()).trim();
+        
+        if(nomeUsuario.isEmpty() || emailUsuario.isEmpty() || senhaUsuario.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor preencha todos os campos");
+            if(nomeUsuario.isEmpty()){
+                nameField.requestFocus();
+            }else if(emailUsuario.isEmpty()){
+                emailField.requestFocus();
+            }else if(senhaUsuario.isEmpty()){
+                passField.requestFocus();
+            }
+            return;
+        }
+        
         Admin a = new Admin();
         AdminDao dao = new AdminDao();
         
